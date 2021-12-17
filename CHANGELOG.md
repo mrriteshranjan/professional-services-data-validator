@@ -2,6 +2,18 @@
 
 ## Untagged
 
+## [1.7.0](https://www.github.com/GoogleCloudPlatform/professional-services-data-validator/compare/v1.6.0...v1.7.0) (2021-12-17)
+
+
+### Features
+
+* Issue339 ldap logmech ([#347](https://www.github.com/GoogleCloudPlatform/professional-services-data-validator/issues/347)) ([ad7f1fc](https://www.github.com/GoogleCloudPlatform/professional-services-data-validator/commit/ad7f1fcfc10541cf19044a1bf88d16deb1398772))
+
+
+### Documentation
+
+* Add Hive as a supported data source to docs ([#354](https://www.github.com/GoogleCloudPlatform/professional-services-data-validator/issues/354)) ([be2a49d](https://www.github.com/GoogleCloudPlatform/professional-services-data-validator/commit/be2a49d8849982f8f75f4bddc607e744b52ec180))
+
 ## [1.6.0](https://www.github.com/GoogleCloudPlatform/professional-services-data-validator/compare/v1.5.0...v1.6.0) (2021-12-01)
 
 
