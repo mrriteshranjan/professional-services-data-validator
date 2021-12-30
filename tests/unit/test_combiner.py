@@ -23,7 +23,6 @@ from data_validation import metadata
 
 
 _NAN = float("nan")
-FAKE_TIME = datetime.datetime(1998, 9, 4, 7, 31, 42)
 
 EXAMPLE_RUN_METADATA = metadata.RunMetadata(
     validations={
@@ -51,16 +50,6 @@ def module_under_test():
     from data_validation import combiner
 
     return combiner
-
-
-@pytest.fixture
-def patch_datetime_now(monkeypatch):
-    class mydatetime:
-        @classmethod
-        def now(cls, utc):
-            return FAKE_TIME
-
-    monkeypatch.setattr(datetime, "datetime", mydatetime)
 
 
 def test_generate_report_with_different_columns(module_under_test):
@@ -127,7 +116,7 @@ def test_generate_report_with_too_many_rows(module_under_test):
                     ),
                 },
                 start_time=datetime.datetime(1998, 9, 4, 7, 30, 1),
-                end_time=None,
+                end_time=datetime.datetime(1998, 9, 4, 7, 31, 42),
                 labels=[("name", "test_label")],
                 run_id="test-run",
             ),
@@ -176,7 +165,7 @@ def test_generate_report_with_too_many_rows(module_under_test):
                     ),
                 },
                 start_time=datetime.datetime(1998, 9, 4, 7, 30, 1),
-                end_time=None,
+                end_time=datetime.datetime(1998, 9, 4, 7, 31, 42),
                 labels=[("name", "test_label")],
                 run_id="test-run",
             ),
@@ -233,7 +222,7 @@ def test_generate_report_with_too_many_rows(module_under_test):
                     ),
                 },
                 start_time=datetime.datetime(1998, 9, 4, 7, 30, 1),
-                end_time=None,
+                end_time=datetime.datetime(1998, 9, 4, 7, 31, 42),
                 labels=[("name", "test_label")],
                 run_id="test-run",
             ),
@@ -289,7 +278,7 @@ def test_generate_report_with_too_many_rows(module_under_test):
                     ),
                 },
                 start_time=datetime.datetime(1998, 9, 4, 7, 30, 1),
-                end_time=None,
+                end_time=datetime.datetime(1998, 9, 4, 7, 31, 42),
                 labels=[("name", "test_label")],
                 run_id="test-run",
             ),
@@ -325,7 +314,7 @@ def test_generate_report_with_too_many_rows(module_under_test):
     ),
 )
 def test_generate_report_without_group_by(
-    module_under_test, patch_datetime_now, source_df, target_df, run_metadata, expected
+    module_under_test, source_df, target_df, run_metadata, expected
 ):
     pandas_client = ibis.backends.pandas.connect(
         {"test_source": source_df, "test_target": target_df}
@@ -386,7 +375,7 @@ def test_generate_report_without_group_by(
                     ),
                 },
                 start_time=datetime.datetime(1998, 9, 4, 7, 30, 1),
-                end_time=None,
+                end_time=datetime.datetime(1998, 9, 4, 7, 31, 42),
                 labels=[("name", "group_label")],
                 run_id="grouped-test",
             ),
@@ -437,7 +426,7 @@ def test_generate_report_without_group_by(
                     ),
                 },
                 start_time=datetime.datetime(1998, 9, 4, 7, 30, 1),
-                end_time=None,
+                end_time=datetime.datetime(1998, 9, 4, 7, 31, 42),
                 labels=[("name", "group_label")],
                 run_id="grouped-test",
             ),
@@ -495,7 +484,7 @@ def test_generate_report_without_group_by(
                     ),
                 },
                 start_time=datetime.datetime(1998, 9, 4, 7, 30, 1),
-                end_time=None,
+                end_time=datetime.datetime(1998, 9, 4, 7, 31, 42),
                 labels=[("name", "group_label")],
                 run_id="grouped-test",
             ),
@@ -546,13 +535,7 @@ def test_generate_report_without_group_by(
     ),
 )
 def test_generate_report_with_group_by(
-    module_under_test,
-    patch_datetime_now,
-    source_df,
-    target_df,
-    join_on_fields,
-    run_metadata,
-    expected,
+    module_under_test, source_df, target_df, join_on_fields, run_metadata, expected
 ):
     pandas_client = ibis.backends.pandas.connect(
         {"test_source": source_df, "test_target": target_df}

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
 import json
 import logging
 import warnings
@@ -292,6 +293,7 @@ class DataValidation(object):
                 verbose=self.verbose,
             )
 
+        self.run_metadata.end_time = datetime.datetime.now(datetime.timezone.utc)
         return result_df
 
     def combine_data(self, source_df, target_df, join_on_fields):
